@@ -1,7 +1,23 @@
+import { Link, useLoaderData } from "react-router";
+import { TODOS } from "../../mock/todos";
+
+export const loader = async () => {
+  const todos = TODOS;
+  return { todos };
+}
+
 const TodosIndex = () => {
+  const { todos } = useLoaderData<typeof loader>();
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       <h1>TodosIndex</h1>
+      <ul className="flex gap-2">
+        {todos.map((todo) => (
+          <li key={todo.id} className="bg-gray-100 hover:bg-gray-200 p-2 rounded-md">
+            <Link to={`/todos/${todo.id}`}>{todo.title}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
