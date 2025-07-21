@@ -1,6 +1,5 @@
 import { Link, useLoaderData } from "react-router";
 import { TODOS } from "../../mock/todos";
-import dayjs from "dayjs";
 
 export const loader = async () => {
   const todos = TODOS;
