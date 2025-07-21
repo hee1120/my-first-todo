@@ -12,13 +12,14 @@ const TodosIndex = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <h1>TodosIndex</h1>
+      <h2 className="text-lg font-bold">List</h2>
       <ul className="flex gap-2">
-        {todos.map(({id, title, dueDate}) => (
-          <li key={id} className="border border-gray-200 hover:bg-gray-100 p-2 rounded-md min-w-64">
-            <Link to={`/todos/${id}`} className="flex flex-col gap-2">
-              {title}
-              <div className="text-gray-500 w-full text-right">期日：{dueDate}</div>
+        {todos.map((todo) => (
+          <li key={todo.id} className="border border-gray-200 hover:bg-gray-100 p-2 rounded-md min-w-64">
+            <Link to={`/todos/${todo.id}`} className="flex flex-col gap-2">
+              {todo.title}
+              <div className="text-gray-500 w-full text-right">期日：{todo.dueDate}</div>
+              <div className="w-full">{todo.description}</div>
             </Link>
           </li>
         ))}
