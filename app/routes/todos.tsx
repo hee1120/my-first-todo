@@ -1,11 +1,11 @@
 import { Outlet } from "react-router";
+import PageLayout from "~/layouts/PageLayout";
 
 const Todos = () => {
 	return (
-		<div>
-			<h1>Todos</h1>
+		<PageLayout title="Todos">
 			<Outlet />
-		</div>
+		</PageLayout>
 	)
 }
 
