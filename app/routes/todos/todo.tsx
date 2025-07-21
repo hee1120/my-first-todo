@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLoaderData } from "react-router";
 import { TODOS } from "~/mock/todos";
 
@@ -8,13 +9,26 @@ export const loader = ({params}: {params: {id: string}}) => {
 
 const Todo = () => {
   const { todo } = useLoaderData<typeof loader>();
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  }
+
   return (
     <div className="border border-gray-200 p-4 rounded-md">
       <div className="flex justify-between">
         {/* タイトル */}
         <h2 className="text-lg font-bold">Detail</h2>
         {/* 編集ボタン   */}
-        <button type="button" className="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-md">Edit</button>
+        <button 
+          type="button"
+          onClick={handleEditClick}
+          className="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-md" 
+        >
+          Edit
+        </button>
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-1">
