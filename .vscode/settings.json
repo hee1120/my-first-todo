@@ -22,5 +22,8 @@
   },
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
-} 
+  },
+  "cSpell.blockCheckingWhenAverageChunkSizeGreaterThan": 500000,
+  "cSpell.enabled": true,
+  "cSpell.allowCompoundWords": true
+}
