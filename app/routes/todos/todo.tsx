@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { useLoaderData } from 'react-router';
-import { TODOS, type Todo } from '~/mock/todos';
+import type { Todo } from '~/types/Todo';
+import { supabase } from '~/utils/supabase';
 
-export const loader = ({ params }: { params: { id: string } }) => {
-  const todo = TODOS.find((todo) => todo.id === Number(params.id));
+export const loader = async ({ params }: { params: { id: string } }) => {
+  const { id } = params;
+  const res = await supabase.from('todos').select('*').eq('id', id).single();
+  const todo = res.data as Todo;
   return { todo };
 };
 
@@ -11,15 +14,14 @@ const initialState: Todo = {
   id: 0,
   title: '',
   description: '',
-  dueDate: '',
-  isDone: false,
+  due_date: '',
+  is_done: false,
 };
 
 const Todo = () => {
   const { todo } = useLoaderData<typeof loader>();
 
   const [formState, setFormState] = useState<Todo>(todo ?? initialState);
-  console.log(formState);
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -62,9 +64,9 @@ const Todo = () => {
               <input
                 type="text"
                 className="border border-gray-200 p-2 rounded-md"
-                value={formState.dueDate}
+                value={formState.due_date}
                 onChange={(e) =>
-                  setFormState({ ...formState, dueDate: e.target.value })
+                  setFormState({ ...formState, due_date: e.target.value })
                 }
               />
               <textarea
@@ -95,9 +97,9 @@ const Todo = () => {
           <>
             <div className="flex flex-col gap-1">
               <h3 className="text-md">{todo?.title}</h3>
-              <div className="text-gray-500 w-full">期日：{todo?.dueDate}</div>
+              <div className="text-gray-500 w-full">期日：{todo?.due_date}</div>
               <div className="text-gray-500 w-full">
-                ステータス：{todo?.isDone ? '完了' : '未完了'}
+                ステータス：{todo?.is_done ? '完了' : '未完了'}
               </div>
             </div>
             <div className="w-full">{todo?.description}</div>

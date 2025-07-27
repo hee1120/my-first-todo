@@ -1,9 +1,13 @@
 import { Link, useLoaderData } from 'react-router';
-import { TODOS } from '../../mock/todos';
+import type { Todo } from '~/types/Todo';
+import { supabase } from '~/utils/supabase';
 
 export const loader = async () => {
-  const todos = TODOS;
-  return { todos };
+  const res = await supabase.from('todos').select('*');
+  if (res.error) {
+    throw new Error('Failed to fetch todos');
+  }
+  return { todos: res.data as Todo[] };
 };
 
 const TodosIndex = () => {
@@ -21,7 +25,7 @@ const TodosIndex = () => {
             <Link to={`/todos/${todo.id}`} className="flex flex-col gap-2">
               {todo.title}
               <div className="text-gray-500 w-full text-right">
-                期日：{todo.dueDate}
+                期日：{todo.due_date}
               </div>
               <div className="w-full">{todo.description}</div>
             </Link>
